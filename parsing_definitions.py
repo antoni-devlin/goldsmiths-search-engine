@@ -31,6 +31,13 @@ def create_parser():
     )
 
     parser.add_argument(
+        "-u",
+        "--Url-Filter",
+        dest="url_filter",
+        help="Specify plaintext patterns to filter search urls by (e.g. /ug/, /pg/, /careers/)",
+    )
+
+    parser.add_argument(
         "-d",
         "--debug",
         dest="debug",

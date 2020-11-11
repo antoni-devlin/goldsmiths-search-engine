@@ -32,6 +32,22 @@ Available output colors:
         print(arg, getattr(args, arg))
     exit()
 
+filters = []
+
+if args.url_filter:
+    filters.append(input("\nPlease specify your filters as a comma separated list.").split(","))
+    print = filters
+elif args.programmefilter:
+    filters = ["/ug/", "/pg/", "/pgce/", "/preparation/"]
+    print = filters
+elif args.programmefilter and args.url_filter:
+    filters = ["/ug/", "/pg/", "/pgce/", "/preparation/"]
+    filters.append(input("\nPlease specify your filters as a comma separated list.").split(","))
+    print = filters
+else:
+    Print("No filters given.")
+    pass
+exit()
 
 sitemap = "sitemap.csv"
 urls = []
@@ -62,7 +78,6 @@ awards = [
     "phd",
     "pre",
 ]
-filters = ["/ug/", "/pg/", "/pgce/", "/preparation/"]
 
 
 def createSitemap(sitemap_filename):
