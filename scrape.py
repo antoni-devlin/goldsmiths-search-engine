@@ -32,19 +32,6 @@ Available output colors:
         print(arg, getattr(args, arg))
     exit()
 
-filters = []
-
-if args.url_filter:
-    for item in input("Please give us a few comma separated words!").split(","):
-        filters.append(item.strip())
-        print(filters)
-
-if args.programmefilter:
-    filter = filter + ["/ug/", "/pg/", "/pgce/", "/preparation/"]
-
-print("Local debug")
-exit()
-
 sitemap = "sitemap.csv"
 urls = []
 search_results = []
@@ -94,26 +81,26 @@ createSitemap(sitemap)
 
 
 def checkPages(url):
-    if args.programmefilter:
-        for filter in filters:
+    if args.url_filters:
+        for filter in args.url_filters:
             if filter in url:
-                url_split = url.split("/")[4].split("-")[0] + "-"
-                for award in awards:
-                    if f"{award}-" == url_split:
-                        # Fetch the content of the url, and store it in a variable called page
-                        page = requests.get(url)
+                # url_split = url.split("/")[4].split("-")[0] + "-"
+                # for award in awards:
+                    # if f"{award}-" == url_split:
+                # Fetch the content of the url, and store it in a variable called page
+                page = requests.get(url)
 
-                        #'Soupify' the content of the page - parse it using an HTML parser
-                        soup = BeautifulSoup(page.text, "html.parser")
-                        content = soup.find("article").text.lower()
-                        section = url.split("/")[3]
-                        for search_term in search_terms:
-                            if search_term in content:
-                                # print(url.strip() + "," + "santander" + "," + section)
-                                print(f"{url}, {search_term}, {section}")
-                                writeTxt(url, search_terms, section)
-                                search_results.append(url)
-                                result_count += 1
+                #'Soupify' the content of the page - parse it using an HTML parser
+                soup = BeautifulSoup(page.text, "html.parser")
+                content = soup.find("article").text.lower()
+                section = url.split("/")[3]
+                for search_term in search_terms:
+                    if search_term in content:
+                        # print(url.strip() + "," + "santander" + "," + section)
+                        print(f"{url}, {search_term}, {section}")
+                        writeTxt(url, search_terms, section)
+                        search_results.append(url)
+                        result_count += 1
     else:
         # Fetch the content of the url, and store it in a variable called page
         page = requests.get(url)

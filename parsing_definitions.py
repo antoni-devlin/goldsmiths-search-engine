@@ -22,18 +22,18 @@ def create_parser():
         help="Specify the path to a sitemap file. If left blank defaults to sitemap.csv",
     )
 
-    parser.add_argument(
-        "-p",
-        "--programmes",
-        dest="programmefilter",
-        action="store_true",
-        help="Restricts search to programme pages only.",
-    )
+    # parser.add_argument(
+    #     "-p",
+    #     "--programmes",
+    #     dest="programmefilter",
+    #     action="store_true",
+    #     help="Restricts search to programme pages only.",
+    # )
 
     parser.add_argument(
         "-u",
-        "--Url-Filter",
-        dest="url_filter",
+        "--Url-Filters",
+        dest="url_filters",
         nargs="+",
         help="Specify plaintext patterns to filter search urls by (e.g. /ug/, /pg/, /careers/)",
     )
