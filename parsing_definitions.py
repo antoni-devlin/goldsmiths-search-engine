@@ -34,6 +34,7 @@ def create_parser():
         "-u",
         "--Url-Filter",
         dest="url_filter",
+        nargs="+",
         help="Specify plaintext patterns to filter search urls by (e.g. /ug/, /pg/, /careers/)",
     )
 

@@ -35,18 +35,14 @@ Available output colors:
 filters = []
 
 if args.url_filter:
-    filters.append(input("\nPlease specify your filters as a comma separated list.").split(","))
-    print = filters
-elif args.programmefilter:
-    filters = ["/ug/", "/pg/", "/pgce/", "/preparation/"]
-    print = filters
-elif args.programmefilter and args.url_filter:
-    filters = ["/ug/", "/pg/", "/pgce/", "/preparation/"]
-    filters.append(input("\nPlease specify your filters as a comma separated list.").split(","))
-    print = filters
-else:
-    Print("No filters given.")
-    pass
+    for item in input("Please give us a few comma separated words!").split(","):
+        filters.append(item.strip())
+        print(filters)
+
+if args.programmefilter:
+    filter = filter + ["/ug/", "/pg/", "/pgce/", "/preparation/"]
+
+print("Local debug")
 exit()
 
 sitemap = "sitemap.csv"
