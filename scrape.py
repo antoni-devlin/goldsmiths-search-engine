@@ -92,7 +92,7 @@ def checkPages(url):
 
                 #'Soupify' the content of the page - parse it using an HTML parser
                 soup = BeautifulSoup(page.text, "html.parser")
-                content = soup.find("article").text.lower()
+                content = soup.find(id="maincontent").text.lower()
                 section = url.split("/")[3]
                 for search_term in search_terms:
                     if search_term in content:
@@ -107,7 +107,7 @@ def checkPages(url):
 
         #'Soupify' the content of the page - parse it using an HTML parser
         soup = BeautifulSoup(page.text, "html.parser")
-        content = soup.find("article").text.lower()
+        content = soup.find(id="maincontent").text.lower()
         section = url.split("/")[3]
         for search_term in search_terms:
             if search_term in content:
