@@ -52,10 +52,9 @@ Currently available are:
 - **-u, --Url-Filters** Lets you specify plaintext patterns to filter sitemap urls by (e.g. /ug/, /pg/, /careers/.) This isn't very sofisticated – it only checks whether the specified strings are present in the url, then parses it if they are.
 - **-d, --Debug** Used for debugging. Will print out all arguments you set, without running a search (kind of like a dry run).
 - **-po, --printoutput** Prints real-time output to terminal as well as writing it to csv. This replaces the .'s that usually track progress.
+- **-n, --outputname** Give a custom filename for the results csv (wrapped in quotes.) The .csv file extension is added automatically.
 
 ## To Do
-
- ### Sitemap improvements
 
 - [ ] Autoregenerate sitemap if enough time has passed since last search.
 - [ ] Add flag to regenerate sitemap before runtime.
