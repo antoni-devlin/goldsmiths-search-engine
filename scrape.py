@@ -130,7 +130,11 @@ for url in urls:
 pool.close()
 pool.join()
 
-file_name = str(int(time.time())) + ".csv"
+if args.output_name:
+    file_name = f"{args.output_name[0]}.csv"
+else:
+    file_name = str(int(time.time())) + ".csv"
+print(f"Writing results to {file_name}.csv.")
 with open(file_name, mode='a') as csv_file:
     csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"')
     csv_writer.writerow(["Page", "Search Term", "Section"])

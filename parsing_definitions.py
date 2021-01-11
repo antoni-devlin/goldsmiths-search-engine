@@ -51,6 +51,14 @@ def create_parser():
         "--printoutput",
         dest="print_output",
         action="store_true",
-        help=f"Print real-time output to terminal as well as writing to csv. This will replace all the .'s printed otherwise.'",
+        help=f"Print real-time output to terminal as well as writing to csv. This will replace all the .'s printed otherwise.",
+    )
+
+    parser.add_argument(
+        "-n",
+        "--outputname",
+        dest="output_name",
+        nargs="+",
+        help=f"Give a custom filename for the results csv (wrapped in quotes.) The .csv file extension is added automatically.",
     )
     return parser
