@@ -16,7 +16,7 @@ def create_parser():
     # Flags
     parser.add_argument(
         "-s",
-        "--Sitemap",
+        "--sitemap",
         dest="sitemap",
         default="sitemap.csv",
         help="Specify the path to a sitemap file. If left blank defaults to sitemap.csv",
@@ -24,7 +24,7 @@ def create_parser():
 
     parser.add_argument(
         "-u",
-        "--Url-Filters",
+        "--url-filters",
         dest="url_filters",
         nargs="+",
         help="Specify plaintext patterns to filter search urls by (e.g. /ug/, /pg/, /careers/)",
@@ -40,9 +40,17 @@ def create_parser():
 
     parser.add_argument(
         "-v",
-        "--Verbose",
+        "--verbose",
         dest="verbose",
         action="store_true",
         help=f"Used for debugging. Prints out verbose output. Useful for checking what's happening behind the scenes.",
+    )
+
+    parser.add_argument(
+        "-po",
+        "--printoutput",
+        dest="print_output",
+        action="store_true",
+        help=f"Print real-time output to terminal as well as writing to csv. This will replace all the .'s printed otherwise.'",
     )
     return parser

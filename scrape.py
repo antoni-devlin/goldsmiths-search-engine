@@ -74,11 +74,10 @@ def createSitemap(sitemap_filename):
                 line_count += 1
             urls.append(row["url"])
             line_count += 1
-        print(f"Processed {line_count} lines.")
+        print(f"Searching across {line_count} pages taken from sitemap.csv.")
 
 
 createSitemap(sitemap)
-
 
 def checkPages(url):
     if args.url_filters:
@@ -96,10 +95,11 @@ def checkPages(url):
                 section = url.split("/")[3]
                 for search_term in search_terms:
                     if search_term in content:
-                        # print(url.strip() + "," + "santander" + "," + section)
-                        print(f"{url}, {search_term}, {section}")
-                        writeTxt(url, search_terms, section)
-                        search_results.append(url)
+                        if args.print_output:
+                            print(f"{url},{search_term},{section}")
+                        else:
+                            print('. ', end='', flush=True)
+                        search_results.append([url, search_term, section])
                         result_count += 1
     else:
         # Fetch the content of the url, and store it in a variable called page
@@ -111,10 +111,11 @@ def checkPages(url):
         section = url.split("/")[3]
         for search_term in search_terms:
             if search_term in content:
-                # print(url.strip() + "," + "santander" + "," + section)
-                print(f"{url}, {search_term}, {section}")
-                writeTxt(url, search_terms, section)
-                search_results.append(url)
+                if args.print_output:
+                    print(f"{url},{search_term},{section}")
+                else:
+                    print('. ', end='', flush=True)
+                search_results.append([url, search_term, section])
                 result_count += 1
 
 
@@ -123,13 +124,22 @@ start_time = datetime.now()
 # Run the search (uses multi processing, across as many threads as are specified in "threads".)
 threads = 20
 pool = ThreadPool(threads)  # However many you wish to run in parallel
-print("Page, Search terms, Section")
 for url in urls:
     pool.apply_async(checkPages, (url,))
 
 pool.close()
 pool.join()
 
+file_name = str(int(time.time())) + ".csv"
+with open(file_name, mode='a') as csv_file:
+    csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"')
+    csv_writer.writerow(["Page", "Search Term", "Section"])
+
+    for result in search_results:
+        csv_writer.writerow([result[0], result[1], result[2]])
+
 end_time = datetime.now()
+print(f"\nYour search matched {len(search_results)} page on gold.ac.uk.")
 print(f"Threads: {threads}")
-print(f"Runtime: {end_time - start_time}")
+runtime = end_time - start_time
+print(f"Runtime: {str(runtime).split('.')[0]}")
