@@ -1,5 +1,6 @@
 import argparse
 
+
 def create_parser():
     ## Setup command line arguments
     # Custom Types
@@ -17,7 +18,7 @@ def create_parser():
     parser.add_argument(
         "-s",
         "--sitemap",
-        dest="sitemap",
+        dest="custom_sitemap",
         default="sitemap.csv",
         help="Specify the path to a sitemap file. If left blank defaults to sitemap.csv",
     )

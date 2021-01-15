@@ -7,12 +7,11 @@ from datetime import datetime
 from parsing_definitions import create_parser
 from colours import bcolours
 
-#Initialise argument parser
+# Initialise argument parser
 parser = create_parser()
 
 # Parse all arguments into a usable format
 args = parser.parse_args()
-
 
 # Debug loop. Will list arguments and exit while the -d/--Debug flag is used
 while args.debug:
@@ -76,8 +75,13 @@ def createSitemap(sitemap_filename):
             line_count += 1
         print(f"Searching across {line_count} pages taken from sitemap.csv.")
 
+if args.custom_sitemap:
+    createSitemap(args.custom_sitemap)
+    print(f"Using custom sitemap: {args.custom_sitemap}.")
+else:
+    createSitemap(sitemap)
+    print("Using exisiting sitemap.")
 
-createSitemap(sitemap)
 
 def checkPages(url):
     if args.url_filters:
@@ -85,7 +89,7 @@ def checkPages(url):
             if filter in url:
                 # url_split = url.split("/")[4].split("-")[0] + "-"
                 # for award in awards:
-                    # if f"{award}-" == url_split:
+                # if f"{award}-" == url_split:
                 # Fetch the content of the url, and store it in a variable called page
                 page = requests.get(url)
 
@@ -96,9 +100,15 @@ def checkPages(url):
                 for search_term in search_terms:
                     if search_term in content:
                         if args.print_output:
-                            print(f"{url},{search_term},{section}")
+                            print(
+                                f"{bcolours.OKGREEN}{url},{search_term},{section}{bcolours.ENDC}"
+                            )
                         else:
-                            print('. ', end='', flush=True)
+                            print(
+                                f"{bcolours.OKGREEN}. {bcolours.ENDC}",
+                                end="",
+                                flush=True,
+                            )
                         search_results.append([url, search_term, section])
                         result_count += 1
     else:
@@ -112,9 +122,11 @@ def checkPages(url):
         for search_term in search_terms:
             if search_term in content:
                 if args.print_output:
-                    print(f"{url},{search_term},{section}")
+                    print(
+                        f"{bcolours.OKGREEN}{url},{search_term},{section}{bcolours.ENDC}"
+                    )
                 else:
-                    print('. ', end='', flush=True)
+                    print(f"{bcolours.OKGREEN}. {bcolours.ENDC}", end="", flush=True)
                 search_results.append([url, search_term, section])
                 result_count += 1
 
@@ -134,9 +146,9 @@ if args.output_name:
     file_name = f"{args.output_name[0]}.csv"
 else:
     file_name = str(int(time.time())) + ".csv"
-print(f"Writing results to {file_name}.csv.")
-with open(file_name, mode='a') as csv_file:
-    csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"')
+print(f"Writing results to {file_name}.")
+with open(file_name, mode="a") as csv_file:
+    csv_writer = csv.writer(csv_file, delimiter=",", quotechar='"')
     csv_writer.writerow(["Page", "Search Term", "Section"])
 
     for result in search_results:

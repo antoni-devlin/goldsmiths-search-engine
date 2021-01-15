@@ -53,10 +53,21 @@ Currently available are:
 - **-d, --Debug** Used for debugging. Will print out all arguments you set, without running a search (kind of like a dry run).
 - **-po, --printoutput** Prints real-time output to terminal as well as writing it to csv. This replaces the .'s that usually track progress.
 - **-n, --outputname** Give a custom filename for the results csv (wrapped in quotes.) The .csv file extension is added automatically.
+- **-s, --sitemap** Provide a custom sitemap instead of the default one. Must be a path to a csv file, provided in quotes (e.g. "custom-sitemap.csv")
+
+### Custom sitemap format
+
+A custom sitemap.csv must be in the following format:
+
+    url,
+    https://www.domain.com,
+    https://www.gold.ac.uk,
+
+It can have more columns than just url, but these aren't parsed by the script. The "url" column header is required.
 
 ## To Do
 
 - [ ] Autoregenerate sitemap if enough time has passed since last search.
 - [ ] Add flag to regenerate sitemap before runtime.
-- [ ] Allow users to specify custom sitemap path at runtime.
+- [x] Allow users to specify custom sitemap path at runtime.
 - [x] Add writing results to csv automatically.
