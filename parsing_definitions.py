@@ -62,4 +62,12 @@ def create_parser():
         nargs="+",
         help=f"Give a custom filename for the results csv (wrapped in quotes.) The .csv file extension is added automatically.",
     )
+
+    parser.add_argument(
+        "-not",
+        "--not-search-term",
+        dest="negate_search",
+        action="store_true",
+        help=f"Negate the search. Only pages NOT containing the search term(s) will be returned.",
+    )
     return parser

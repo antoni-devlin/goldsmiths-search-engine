@@ -2,7 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 from multiprocessing.pool import ThreadPool
-import csv, time
+import csv, time, os
 from datetime import datetime
 from parsing_definitions import create_parser
 from colours import bcolours
@@ -75,6 +75,7 @@ def createSitemap(sitemap_filename):
             line_count += 1
         print(f"Searching across {line_count} pages taken from sitemap.csv.")
 
+
 if args.custom_sitemap:
     createSitemap(args.custom_sitemap)
     print(f"Using custom sitemap: {args.custom_sitemap}.")
@@ -82,15 +83,25 @@ else:
     createSitemap(sitemap)
     print("Using exisiting sitemap.")
 
+if args.negate_search:
+    print(
+        f"Performing search for pages the {bcolours.WARNING}DO NOT CONTAIN{bcolours.ENDC} the search terms."
+    )
+else:
+    print(
+        f"Performing search for pages the {bcolours.OKGREEN}CONTAIN{bcolours.ENDC} the search terms."
+    )
+
+# Check if output folder exists. If not, create it.
+if not os.path.exists("scraping_output"):
+    print("scraping_output folder does not exist. Creating...")
+    os.makedirs("scraping_output")
+
 
 def checkPages(url):
     if args.url_filters:
         for filter in args.url_filters:
             if filter in url:
-                # url_split = url.split("/")[4].split("-")[0] + "-"
-                # for award in awards:
-                # if f"{award}-" == url_split:
-                # Fetch the content of the url, and store it in a variable called page
                 page = requests.get(url)
 
                 #'Soupify' the content of the page - parse it using an HTML parser
@@ -101,7 +112,7 @@ def checkPages(url):
                     if search_term in content:
                         if args.print_output:
                             print(
-                                f"{bcolours.OKGREEN}{url},{search_term},{section}{bcolours.ENDC}"
+                                f"{bcolours.OKGREEN}{url}, {search_term}, {section}{bcolours.ENDC}"
                             )
                         else:
                             print(
@@ -123,7 +134,7 @@ def checkPages(url):
             if search_term in content:
                 if args.print_output:
                     print(
-                        f"{bcolours.OKGREEN}{url},{search_term},{section}{bcolours.ENDC}"
+                        f"{bcolours.OKGREEN}{url}, {search_term}, {section}{bcolours.ENDC}"
                     )
                 else:
                     print(f"{bcolours.OKGREEN}. {bcolours.ENDC}", end="", flush=True)
@@ -146,8 +157,9 @@ if args.output_name:
     file_name = f"{args.output_name[0]}.csv"
 else:
     file_name = str(int(time.time())) + ".csv"
-print(f"Writing results to {file_name}.")
-with open(file_name, mode="a") as csv_file:
+
+print(f"Writing results to scraping_output/{file_name}.")
+with open(f"scraping_output/{file_name}", mode="a") as csv_file:
     csv_writer = csv.writer(csv_file, delimiter=",", quotechar='"')
     csv_writer.writerow(["Page", "Search Term", "Section"])
 
