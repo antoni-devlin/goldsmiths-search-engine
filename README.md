@@ -5,7 +5,7 @@ CLI utility used to search for occurrences of strings across all indexed pages o
 
 ### Clone repo
 
-Clone this repo into your porject directory.
+Clone this repo into your project directory.
 
     git clone https://github.com/antoni-devlin/goldsmiths-search-engine.git
 
@@ -44,16 +44,17 @@ All commands need to be run from within the project directory. This is the most 
 
     ./scrape.py "search term"
 
-This will crawl every page specified in the hardcoded sitemap, and write a list of  a list of matches in the terminal.
+This will crawl every page specified in the hardcoded sitemap, and write a list of a list of matches in the terminal.
 ## Flags
 CLI arguments are defined in parsing_definitions.py, then imported into scrape.py.
 Currently available are:
 
-- **-u, --Url-Filters** Lets you specify plaintext patterns to filter sitemap urls by (e.g. /ug/, /pg/, /careers/.) This isn't very sofisticated – it only checks whether the specified strings are present in the url, then parses it if they are.
-- **-d, --Debug** Used for debugging. Will print out all arguments you set, without running a search (kind of like a dry run).
+- **-u, --Url-Filters** Lets you specify plaintext patterns to filter sitemap urls by (e.g. /ug/, /pg/, /careers/.) This isn't very sofisticated – it only checks whether the specified strings are present in the url, then parses it if they are. Use with caution.
+- **-d, --Debug** Used for debugging. Will print out all arguments you set, without running a search (like a dry run).
 - **-po, --printoutput** Prints real-time output to terminal as well as writing it to csv. This replaces the .'s that usually track progress.
 - **-n, --outputname** Give a custom filename for the results csv (wrapped in quotes.) The .csv file extension is added automatically.
-- **-s, --sitemap** Provide a custom sitemap instead of the default one. Must be a path to a csv file, provided in quotes (e.g. "custom-sitemap.csv")
+
+It's usually better to filter a given CSV file for URLs after running your search than relying on my janky filtering logic. You've been warned!
 
 ### Custom sitemap format
 
@@ -63,11 +64,11 @@ A custom sitemap.csv must be in the following format:
     https://www.domain.com,
     https://www.gold.ac.uk,
 
-It can have more columns than just url, but these aren't parsed by the script. The "url" column header is required.
+It can have more columns than just url to the right, but these aren't parsed by the script. The "url" column header is required.
 
 ## To Do
 
 - [ ] Autoregenerate sitemap if enough time has passed since last search.
 - [ ] Add flag to regenerate sitemap before runtime.
-- [x] Allow users to specify custom sitemap path at runtime.
+- [ ] Allow users to specify custom sitemap path at runtime.
 - [x] Add writing results to csv automatically.
