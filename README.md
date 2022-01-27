@@ -69,6 +69,6 @@ It can have more columns than just url to the right, but these aren't parsed by 
 ## To Do
 
 - [ ] Autoregenerate sitemap if enough time has passed since last search.
-- [ ] Add flag to regenerate sitemap before runtime.
-- [ ] Allow users to specify custom sitemap path at runtime.
+- [ ] Add flag to regenerate sitemap before execution.
+- [ ] Allow users to specify custom sitemap path using command line flag.
 - [x] Add writing results to csv automatically.
